@@ -10,17 +10,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.outlined.Check
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import com.why.jetpack.compose.ui.theme.JetpackComposeTheme
 
@@ -46,42 +46,45 @@ fun InitView() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        var text by remember {
+        var password by remember {
             mutableStateOf("")
+        }
+        var passVisibility by remember {
+            mutableStateOf(false)
         }
         val context = LocalContext.current
         val keyboardController = LocalSoftwareKeyboardController.current
 
+        val icon =
+            if (passVisibility)
+                painterResource(id = R.drawable.ic_visibility_on)
+            else
+                painterResource(id = R.drawable.ic_visibility_off)
+
         // TextField, BasicTextField, OutlineTextField
-        TextField(
-            value = text,
+        OutlinedTextField(
+            value = password,
             onValueChange = {
-                text = it
+                password = it
             },
             placeholder = {
                 Text(text = "Type here...")
             },
             label = {
-                Text(text = "First Name")
-            },
-            leadingIcon = {
-                IconButton(onClick = { /*TODO*/ }) {
-                    Icon(
-                        imageVector = Icons.Filled.Person,
-                        contentDescription = "Person Name"
-                    )
-                }
+                Text(text = "Password")
             },
             trailingIcon = {
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = {
+                    passVisibility = !passVisibility
+                }) {
                     Icon(
-                        imageVector = Icons.Outlined.Check,
+                        painter = icon,
                         contentDescription = "Check"
                     )
                 }
             },
             keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text,
+                keyboardType = KeyboardType.Password,
                 imeAction = ImeAction.Done
             ),
             keyboardActions = KeyboardActions(
@@ -89,7 +92,10 @@ fun InitView() {
                     Toast.makeText(context, "done :)", Toast.LENGTH_SHORT).show()
                     keyboardController?.hide()
                 }
-            )
+            ),
+            visualTransformation =
+            if (passVisibility) VisualTransformation.None
+            else PasswordVisualTransformation()
         )
     }
 }
