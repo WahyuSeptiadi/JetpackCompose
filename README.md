@@ -8,3 +8,5 @@
 <img src="https://user-images.githubusercontent.com/37952748/132131645-d2e26668-5ea7-4cb7-8255-aff1a4ff8437.gif" alt="NotFound" height="350"><br>
 - Password <br>
 <img src="https://user-images.githubusercontent.com/37952748/132626555-37a3f86f-fd78-4152-b196-68ce61699967.gif" alt="NotFound" height="350"><br>
+- GradientBtn <br>
+<img src="https://user-images.githubusercontent.com/37952748/133452037-30778eb4-ba4b-4347-be86-6badfacaffe4.gif" alt="NotFound" height="350"><br>
